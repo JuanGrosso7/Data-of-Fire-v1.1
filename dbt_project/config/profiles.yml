@@ -1,0 +1,11 @@
+fire_incidents_profile:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      host: postgres
+      user: db_user
+      password: db_password
+      dbname: fire_db
+      schema: public
+      port: 5432

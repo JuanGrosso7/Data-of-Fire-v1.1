@@ -1,0 +1,11 @@
+name: 'fire_incidents_project'
+version: '1.0'
+profile: 'fire_incidents_profile'
+
+models:
+  fire_incidents_project:
+    production:
+      fire_incidents:
+        +materialized: table
+      total_fire_incidents_per_month_report:
+        +materialized: view

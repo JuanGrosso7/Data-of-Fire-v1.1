@@ -1,0 +1,31 @@
+version: 2
+
+models:
+  - name: fire_incidents
+    description: "Final table with fire incident data for analysis."
+    columns:
+      - name: incident_number
+        description: "Unique incident number."
+        tests:
+          - not_null
+      - name: id
+        description: "Unique ID of the incident."
+        tests:
+          - not_null
+          - unique
+      - name: incident_date
+        description: "Date of the incident."
+        tests:
+          - not_null
+
+  - name: total_fire_incidents_per_month_report
+    description: "Example report"
+    columns:
+      - name: month
+        description: "Total incidents per month"
+      - name: total_incidents
+        description: "Number of incidents in the month."
+
+macros:
+  - name: clean_null_values
+    description: "Clean null values."

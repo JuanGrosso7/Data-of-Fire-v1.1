@@ -1,0 +1,40 @@
+services:
+  postgres:
+    image:  postgis/postgis:13-3.2
+    environment:
+      POSTGRES_USER: db_user
+      POSTGRES_PASSWORD: db_password
+      POSTGRES_DB: fire_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  dbt:
+    image: python:3.9-slim
+    environment:
+      DBT_PROFILES_DIR: /app/config
+    volumes:
+      - ./dbt_project:/app/dbt_project
+      - ./scripts:/app/scripts  
+      - ./dbt_project/config/profiles.yml:/app/config/profiles.yml
+    working_dir: /app
+    command: ["tail", "-f", "/dev/null"]
+    depends_on:
+      - postgres
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: fire_incidents@email.com  
+      PGADMIN_DEFAULT_PASSWORD: admin123        
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+
+volumes:
+  postgres_data:
+  pgadmin_data:
